@@ -1,32 +1,45 @@
 function modal(){
 
-	function bindModal(triggersSelector, modalSelector, closeSelector){
+	function bindModal(triggersSelector, modalSelector, closeSelector, closeClickOverlay = true){
 		const triggers = document.querySelectorAll(triggersSelector),
 			modal = document.querySelector(modalSelector),
-			close = document.querySelectorAll(closeSelector);
+			close = document.querySelector(closeSelector),
+			modals = document.querySelectorAll('[data-modal]');
 
 		triggers.forEach(trigger=>{
 			trigger.addEventListener('click', (e)=>{
 				e.preventDefault();
-				if(e.target) {
-					modal.style.display = 'block';
-					document.body.style.overflow = 'hidden';
-					clearTimeout(modalTime);
-				}
+
+				modals.forEach(item=>{
+					item.style.display = 'none';
+				});
+
+				modal.style.display = 'block';
+				document.body.style.overflow = 'hidden';
+				clearTimeout(modalTime);
+				
 			});
 		});
 
-		close.forEach(btn=>{
-			btn.addEventListener('click', (e)=>{
-				if(e.target){
-					modal.style.display = 'none';
-					document.body.style.overflow = '';
-				}
+		
+		close.addEventListener('click', ()=>{
+			modals.forEach(item=>{
+				item.style.display = 'none';
 			});
+
+			modal.style.display = 'none';
+			document.body.style.overflow = '';
+			
 		});
+	
 
 		modal.addEventListener('click', (e)=>{
-			if (e.target == modal){
+
+			if (e.target == modal && closeClickOverlay){
+				modals.forEach(item=>{
+					item.style.display = 'none';
+				});
+
 				modal.style.display = 'none';
 				document.body.style.overflow = '';
 			}
@@ -44,10 +57,13 @@ function modal(){
 		}, timer);
 	}
 
-	bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_close');
-	bindModal('.phone_link', '.popup', '.popup_close');
+	bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
+	bindModal('.phone_link', '.popup', '.popup .popup_close');
+	bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close');
+	bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
+	bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false);
 	
-	modalTimeout('.popup', 6000);
+	// modalTimeout('.popup', 60000);
 
 }
 

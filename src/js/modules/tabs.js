@@ -1,22 +1,39 @@
-function tabs(){
+const tabs = (headerSelector, tabSelector, contentSelector, activeClass, display='block') => {
+	const header = document.querySelector(headerSelector),
+		tab = document.querySelectorAll(tabSelector),
+		content = document.querySelectorAll(contentSelector);
 
-	const tabs = document.querySelectorAll('.glazing_block'),
-		tabsLink = document.querySelectorAll('.glazing_block a'),
-		tabsContents = document.querySelectorAll('.glazing_content');
-
-	tabs.forEach((tab, i)=>{
-		tab.addEventListener('click', (e)=>{
-			tabsLink.forEach(link=>link.classList.remove('active'));
-			if(e.target) {
-				tab.querySelector('a').classList.add('active');
-				tabsContents.forEach(item=>item.style.display = 'none');
-				tabsContents[i].style.display = 'block';
-			}
-			
+	function hideTabContent() {
+		content.forEach(item => {
+			item.style.display = 'none';
 		});
-	});
 
-		
-}
+		tab.forEach(item => {
+			item.classList.remove(activeClass);
+		});
+	}
+
+	function showTabContent(i = 0) {
+		content[i].style.display = display;
+		tab[i].classList.add(activeClass);
+	}
+
+	hideTabContent();
+	showTabContent();
+
+	header.addEventListener('click', (e) => {
+		const target = e.target;
+		if (target &&
+            (target.classList.contains(tabSelector.replace(/\./, '')) || 
+        target.parentNode.classList.contains(tabSelector.replace(/\./, '')))) {
+			tab.forEach((item, i) => {
+				if (target == item || target.parentNode == item) {
+					hideTabContent();
+					showTabContent(i);
+				}
+			});
+		}
+	});
+};
 
 export default tabs;
