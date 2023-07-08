@@ -207,6 +207,46 @@ function modal() {
 
 /***/ }),
 
+/***/ "./src/js/modules/showImg.js":
+/*!***********************************!*\
+  !*** ./src/js/modules/showImg.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const showImg = selector => {
+  const workSection = document.querySelector(selector),
+    imgPopup = document.createElement('div'),
+    bigImage = document.createElement('img');
+  imgPopup.classList.add('popup');
+  workSection.append(imgPopup);
+  imgPopup.append(bigImage);
+  imgPopup.style.justifyContent = 'center';
+  imgPopup.style.alignItems = 'center';
+  imgPopup.style.display = 'none';
+  workSection.addEventListener('click', e => {
+    e.preventDefault();
+    const t = e.target;
+    if (t.classList.contains('preview')) {
+      imgPopup.style.display = 'flex';
+      const path = t.parentNode.getAttribute('href');
+      bigImage.setAttribute('src', path);
+      bigImage.style.maxWidth = '70%';
+      document.body.style.overflow = 'hidden';
+    }
+    if (t.matches('div.popup')) {
+      imgPopup.style.display = 'none';
+    }
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (showImg);
+
+/***/ }),
+
 /***/ "./src/js/modules/slider.js":
 /*!**********************************!*\
   !*** ./src/js/modules/slider.js ***!
@@ -14207,6 +14247,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/changeModalState */ "./src/js/modules/changeModalState.js");
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_showImg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/showImg */ "./src/js/modules/showImg.js");
+
 
 
 
@@ -14229,6 +14271,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline');
   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])();
   (0,_modules_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('02-27-2024', timerSelectors, 10);
+  (0,_modules_showImg__WEBPACK_IMPORTED_MODULE_6__["default"])('.works');
 });
 })();
 

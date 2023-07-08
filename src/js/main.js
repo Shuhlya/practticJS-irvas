@@ -4,6 +4,7 @@ import tabs from './modules/tabs';
 import forms from './modules/forms';
 import changeModalState from './modules/changeModalState';
 import timer from './modules/timer';
+import showImg from './modules/showImg';
 
 document.addEventListener('DOMContentLoaded', ()=>{
 	let modalState = {};
@@ -22,4 +23,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
 	tabs('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline');
 	forms();
 	timer('02-27-2024', timerSelectors, 10);
+	showImg('.works');
 });
